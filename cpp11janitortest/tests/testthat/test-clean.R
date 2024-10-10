@@ -1,6 +1,6 @@
 test_that("return clean strings", {
-  setwd("~/github/cpp11janitor/"); install()
-  setwd("~/github/cpp11janitor/cpp11janitortest/"); cpp11::cpp_register(); clean_dll(); load_all()
+  # setwd("~/github/cpp11janitor/"); install()
+  # setwd("~/github/cpp11janitor/cpp11janitortest/"); cpp11::cpp_register(); clean_dll(); load_all()
 
   cols <- c("DEPTO_REF_ID", "CPV2011_REF_ID", "IDDEPTO", "DEPTO", "NDEPTO", "REDCODEN")
 
@@ -44,4 +44,11 @@ test_that("return clean strings", {
   vars <- "Konnichiwa \xe3\x81\x93\xe3\x82\x93\xe3\x81\xab\xe3\x81\xa1\xe3\x81\xaf"
   expect_equal(test_tidy_r_names(vars), "konnichiwa")
   expect_equal(test_tidy_r_vars(vars), "Konnichiwa \u3053\u3093\u306b\u3061\u306f")
+
+  # Intentionaly break the encoding
+  correct_str <- "Paysand\u00fa"
+  broken_str <- iconv(correct_str, from = "UTF-8", to = "ISO-8859-1")
+  Encoding(broken_str) <- "bytes"
+  expect_error(test_tidy_r_vars(broken_str))
+  expect_error(test_tidy_r_names(broken_str))
 })
