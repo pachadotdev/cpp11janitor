@@ -2,12 +2,14 @@
 #define TIDY_HPP
 
 #include <algorithm>
-#include <cpp11.hpp>
+#include <map>
 #include <regex>
 #include <sstream>
 #include <string>
 #include <unordered_map>
 #include <vector>
+
+#include <cpp11.hpp>
 
 // Remove starting spaces and punctuation
 std::string remove_starting_spaces_and_punctuation(const std::string& str) {
